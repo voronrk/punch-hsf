@@ -9,6 +9,8 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['value'];
+
     function punches()
     {
         return $this->belongsToMany(Punch::class);

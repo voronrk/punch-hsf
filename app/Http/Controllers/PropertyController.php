@@ -3,33 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Punch;
-use App\Models\Pic;
 use App\Models\Product;
 use App\Models\Material;
 use App\Models\Machine;
 
-class PunchController extends Controller
+class PropertyController extends Controller
 {
+
+    protected $model;
+
     /**
-     * Display a listing of the resource.
+     * Return list of properties for filter.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return $this->model::select('id', 'value')->get();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add new property to database
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $this->model::create([
+            'value'=> $request->value
+        ]);
     }
 
     /**
@@ -40,8 +43,7 @@ class PunchController extends Controller
      */
     public function show($id)
     {
-        // return Punch::with(['pics','products','materials','machines'])->where('id', $request->id)->get();
-        return Punch::with(['pics','products','materials','machines'])->where('id', $id)->get();
+        //
     }
 
     /**

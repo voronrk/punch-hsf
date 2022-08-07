@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\PunchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/enumerate.product.list', [ProductController::class, 'index']);
-Route::get('/enumerate.machine.list', [MachineController::class, 'index']);
-Route::get('/enumerate.material.list', [MaterialController::class, 'index']);
+Route::get('/machine.add', [MachineController::class, 'store']);
+Route::get('/material.add', [MaterialController::class, 'store']);
+Route::get('/product.add', [ProductController::class, 'store']);
+
+Route::apiResources([
+    'product' => ProductController::class,
+    'machine' => MachineController::class,
+    'material' => MaterialController::class,
+    'punch' => PunchController::class,
+]);
+
