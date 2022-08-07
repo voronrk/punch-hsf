@@ -43,19 +43,19 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->model::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->model::where('id', $request->id)
+                    ->update(['value' => $request->value]);
     }
 
     /**
@@ -64,8 +64,8 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $this->model::where('id', $request->id)->delete();
     }
 }

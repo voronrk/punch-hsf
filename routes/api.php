@@ -27,6 +27,14 @@ Route::get('/machine.add', [MachineController::class, 'store']);
 Route::get('/material.add', [MaterialController::class, 'store']);
 Route::get('/product.add', [ProductController::class, 'store']);
 
+Route::get('/machine.update', [MachineController::class, 'update']);
+Route::get('/material.update', [MaterialController::class, 'update']);
+Route::get('/product.update', [ProductController::class, 'update']);
+
+Route::get('/machine.delete', [MachineController::class, 'destroy']);
+Route::get('/material.delete', [MaterialController::class, 'destroy']);
+Route::get('/product.delete', [ProductController::class, 'destroy']);
+
 Route::apiResources([
     'product' => ProductController::class,
     'machine' => MachineController::class,
