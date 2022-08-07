@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Punch;
+use App\Models\Pic;
+use App\Models\Product;
+use App\Models\Material;
+use App\Models\Machine;
 
 class PunchController extends Controller
 {

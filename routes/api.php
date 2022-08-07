@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MachineController;
+use App\Http\Controllers\MaterialController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/enumerate.product.list', [ProductController::class, 'index']);
+Route::get('/enumerate.machine.list', [MachineController::class, 'index']);
+Route::get('/enumerate.material.list', [MaterialController::class, 'index']);
