@@ -44,18 +44,18 @@ class PunchRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
+{
         $rules = [
             'id' => 'required|integer',
-            'title' => 'required',
+            'name' => 'required',
             'size-length' => 'required|numeric',
             'size-width' => 'required|numeric',
-            'size-height' => '',
+            'size-height' => 'nullable|numeric',
             'knife-size-length' => 'required|numeric',
             'knife-size-width' => 'required|numeric',
-            'products' => 'required',
-            'machines' => 'required',
-            'materials' => 'required',
+            'products' => 'required|array',
+            'machines' => 'required|array',
+            'materials' => 'required|array',
             'year' => "integer|between:2000,{$this->currentYear}",
             'ordernum' => '',
         ];
@@ -64,7 +64,11 @@ class PunchRequest extends FormRequest
                 'id' => $rules['id'],
             ];
         } elseif ($this->is('*.update')) {
-            return $rules;
+            $result = [];
+            foreach($this->keys() as $key) {
+                $result[$key] = $rules[$key];
+            };
+            return $result;
         } elseif ($this->is('*.add')) {
             unset($rules['id']);
             return $rules;
@@ -88,9 +92,13 @@ class PunchRequest extends FormRequest
             'machines.required' => 'Не указана машина',            
             'size-length.required' => 'Не указана длина изделия',
             'size-width.required' => 'Не указана ширина изделия',
+            'size-length.numeric' => 'Длина изделия должна быть числом',
+            'size-width.numeric' => 'Ширина изделия должна быть числом',
+            'size-height.numeric' => 'Высота изделия должна быть числом',
             'knife-size-length.required' => 'Не указана длина по ножам',
             'knife-size-width.required' => 'Не указана ширина по ножам',
-            'subject.numeric' => 'Поле должно содержать число',
+            'knife-size-length.numeric' => 'Длина по ножам должна быть числом',
+            'knife-size-width.numeric' => 'Ширина по ножам должна быть числом',
             'year.integer' => 'Год должен быть целым числом',
             "year.between" => "Год должен быть в диапазоне от 2000 до {$this->currentYear}",
         ];

@@ -14,7 +14,7 @@ use App\Models\Machine;
 class PunchController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Return the list of punches (.list method)
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,7 +24,7 @@ class PunchController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create new punch (.add method)
      *
      * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
@@ -33,27 +33,17 @@ class PunchController extends Controller
     {
         $validatedRequest = $request->validated();
 
-        // echo "<pre>";
-        // echo print_r($request->all(),true);
-        // echo print_r($validatedRequest,true);
-        // echo "</pre>";
-        // die();
-
         $punch = Punch::create([
-            'name' => $validatedRequest['title'],
+            'name' => $validatedRequest['name'],
             'ordernum' => $validatedRequest['ordernum'],
             'year' => $validatedRequest['year'],
-            'size_length' => $validatedRequest['size-length'],
-            'size_width' => $validatedRequest['size-width'],
-            'size_height' => $validatedRequest['size-height'],
-            'knife_size_length' => $validatedRequest['knife-size-length'],
-            'knife_size_width' => $validatedRequest['knife-size-width'],
+            'size-length' => $validatedRequest['size-length'],
+            'size-width' => $validatedRequest['size-width'],
+            'size-height' => $validatedRequest['size-height'],
+            'knife-size-length' => $validatedRequest['knife-size-length'],
+            'knife-size-width' => $validatedRequest['knife-size-width'],
         ]);
 
-        // echo "<pre>";
-        // echo print_r($validatedRequest->products,true);
-        // echo "</pre>";
-        // die();
         $products = Product::find($validatedRequest['products']);
         if ($products) {
             $punch->products()->attach($products);
@@ -82,7 +72,7 @@ class PunchController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Return one punch by id (.get method)
      *
      * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
@@ -94,18 +84,21 @@ class PunchController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update punch (.update method)
      *
      * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function update(PunchRequest $request)
     {
-        
+        $data = $request->validated();
+        $id = $data['id'];
+        unset($data['id']);
+        return Punch::where('id', $id)->update($data);        
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete punch (.delete method)
      *
      * @param App\Http\Requests\PunchRequest
      * @return \Illuminate\Http\Response

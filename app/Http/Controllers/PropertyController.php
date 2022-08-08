@@ -35,7 +35,7 @@ abstract class PropertyController extends Controller
     }
 
     /**
-     * Display one property by id (.get method)
+     * Return one property by id (.get method)
      *
      * @param  App\Http\Requests\PropertyRequest $request
      * @return \Illuminate\Http\Response
