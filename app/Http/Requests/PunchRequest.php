@@ -6,8 +6,15 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
 
-class PropertyRequest extends FormRequest
+class PunchRequest extends FormRequest
 {
+
+    protected $currentYear;
+
+    public function __construct()
+    {
+        $this->currentYear = date("Y");
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +34,7 @@ class PropertyRequest extends FormRequest
      */
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        $response = new Response(['error' => $validator->errors()->first()], 422);
+        $response = new Response(['error' => $validator->errors()->all()], 422);
         throw new ValidationException($validator, $response);
     }
 
@@ -48,18 +55,25 @@ class PropertyRequest extends FormRequest
             'products' => 'required',
             'machines' => 'required',
             'materials' => 'required',
+            'year' => "integer|between:2000,{$this->currentYear}",
+            'ordernum' => '',
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Необходимо ввести название',
-            'products.required' => 'Выберите хотя бы один продукт',
-            'materials.required' => 'Выберите хотя бы один материал',
-            'machines.required' => 'Выберите машину',            
-            'required' => 'Заполните это поле',
+            'title.required' => 'Не указано название',
+            'products.required' => 'Не указан продукт',
+            'materials.required' => 'Не указан материал',
+            'machines.required' => 'Не указана машина',            
+            'size-length.required' => 'Не указана длина изделия',
+            'size-width.required' => 'Не указана ширина изделия',
+            'knife-size-length.required' => 'Не указана длина по ножам',
+            'knife-size-width.required' => 'Не указана ширина по ножам',
             'subject.numeric' => 'Поле должно содержать число',
+            'year.integer' => 'Год должен быть целым числом',
+            "year.between" => "Год должен быть в диапазоне от 2000 до {$this->currentYear}",
         ];
     }
 }
