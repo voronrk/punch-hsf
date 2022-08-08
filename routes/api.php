@@ -35,10 +35,18 @@ Route::get('/machine.delete', [MachineController::class, 'destroy']);
 Route::get('/material.delete', [MaterialController::class, 'destroy']);
 Route::get('/product.delete', [ProductController::class, 'destroy']);
 
-Route::apiResources([
-    'product' => ProductController::class,
-    'machine' => MachineController::class,
-    'material' => MaterialController::class,
-    'punch' => PunchController::class,
-]);
+Route::get('/machine.get', [MachineController::class, 'show']);
+Route::get('/material.get', [MaterialController::class, 'show']);
+Route::get('/product.get', [ProductController::class, 'show']);
+
+Route::get('/machine.list', [MachineController::class, 'index']);
+Route::get('/material.list', [MaterialController::class, 'index']);
+Route::get('/product.list', [ProductController::class, 'index']);
+
+// Route::apiResources([
+//     'product' => ProductController::class,
+//     'machine' => MachineController::class,
+//     'material' => MaterialController::class,
+//     'punch' => PunchController::class,
+// ]);
 

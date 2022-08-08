@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PropertyRequest;
 
 abstract class PropertyController extends Controller
 {
@@ -10,7 +11,7 @@ abstract class PropertyController extends Controller
     protected $model;
 
     /**
-     * Return list of properties for filter.
+     * Return list of properties for filter (.list method)
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,49 +21,53 @@ abstract class PropertyController extends Controller
     }
 
     /**
-     * Add new property to database
+     * Add new property to database (.add method)
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\PropertyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PropertyRequest $request)
     {
-        $this->model::create([
-            'value'=> $request->value
+        $data = $request->validated();
+        return $this->model::create([
+            'value'=> $data['value']
         ]);
     }
 
     /**
-     * Display the specified resource.
+     * Display one property by id (.get method)
      *
-     * @param  int  $id
+     * @param  App\Http\Requests\PropertyRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(PropertyRequest $request)
     {
-        return $this->model::findOrFail($id);
+        $data = $request->validated();
+        return $this->model::findOrFail($data['id']);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update property (.update method)
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\PropertyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(PropertyRequest $request)
     {
-        $this->model::where('id', $request->id)
-                    ->update(['value' => $request->value]);
+        $data = $request->validated();
+        return $this->model::where('id', $data['id'])
+                    ->update(['value' => $data['value']]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove property (.delete method)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $this->model::where('id', $request->id)->delete();
+        $property = $this->model::findOrFail($request->id);
+        return $property->delete();
     }
 }
