@@ -18,7 +18,7 @@ class PunchController extends Controller
      */
     public function index()
     {
-        //
+        return Punch::with(['pics','products','materials','machines'])->get();
     }
 
     /**
@@ -38,9 +38,8 @@ class PunchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        // return Punch::with(['pics','products','materials','machines'])->where('id', $request->id)->get();
         return Punch::with(['pics','products','materials','machines'])->where('id', $id)->get();
     }
 
@@ -51,7 +50,7 @@ class PunchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -62,7 +61,7 @@ class PunchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
