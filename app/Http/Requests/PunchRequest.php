@@ -45,7 +45,8 @@ class PunchRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
+            'id' => 'required|integer',
             'title' => 'required',
             'size-length' => 'required|numeric',
             'size-width' => 'required|numeric',
@@ -58,11 +59,29 @@ class PunchRequest extends FormRequest
             'year' => "integer|between:2000,{$this->currentYear}",
             'ordernum' => '',
         ];
+        if ($this->is('*.delete')) {
+            return [
+                'id' => $rules['id'],
+            ];
+        } elseif ($this->is('*.update')) {
+            return $rules;
+        } elseif ($this->is('*.add')) {
+            unset($rules['id']);
+            return $rules;
+        } elseif ($this->is('*.get')) {
+            return [
+                'id' => $rules['id'],
+            ];
+        } else {
+            return ['Wrong method!'];
+        }
+        return $rules;
     }
 
     public function messages()
     {
         return [
+            'id.required' => 'Не указан id элемента',
             'title.required' => 'Не указано название',
             'products.required' => 'Не указан продукт',
             'materials.required' => 'Не указан материал',

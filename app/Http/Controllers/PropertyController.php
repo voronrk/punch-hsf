@@ -49,7 +49,7 @@ abstract class PropertyController extends Controller
     /**
      * Update property (.update method)
      *
-     * @param  \Illuminate\Http\Requests\PropertyRequest  $request
+     * @param  App\Http\Requests\PropertyRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function update(PropertyRequest $request)
@@ -62,12 +62,13 @@ abstract class PropertyController extends Controller
     /**
      * Remove property (.delete method)
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\PropertyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(PropertyRequest $request)
     {
-        $property = $this->model::findOrFail($request->id);
+        $data = $request->validated();
+        $property = $this->model::findOrFail($data['id']);
         return $property->delete();
     }
 }

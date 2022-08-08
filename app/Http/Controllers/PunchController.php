@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PunchRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Punch;
 use App\Models\Pic;
 use App\Models\Product;
@@ -25,32 +26,48 @@ class PunchController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(PunchRequest $request)
     {
         $validatedRequest = $request->validated();
 
+        // echo "<pre>";
+        // echo print_r($request->all(),true);
+        // echo print_r($validatedRequest,true);
+        // echo "</pre>";
+        // die();
+
         $punch = Punch::create([
             'name' => $validatedRequest['title'],
-            'ordernum' => $validatedRequest->input('ordernum'),
-            'year' => $validatedRequest->input('year'),
+            'ordernum' => $validatedRequest['ordernum'],
+            'year' => $validatedRequest['year'],
             'size_length' => $validatedRequest['size-length'],
             'size_width' => $validatedRequest['size-width'],
-            'size_height' => $validatedRequest->input('size-height'),
-            'knife_size_length' => $validatedRequest->input('knife-size-length'),
-            'knife_size_width' => $validatedRequest->input('knife-size-width'),
+            'size_height' => $validatedRequest['size-height'],
+            'knife_size_length' => $validatedRequest['knife-size-length'],
+            'knife_size_width' => $validatedRequest['knife-size-width'],
         ]);
 
-        $products = Product::find($request->products);
-        $punch->products()->attach($products);
+        // echo "<pre>";
+        // echo print_r($validatedRequest->products,true);
+        // echo "</pre>";
+        // die();
+        $products = Product::find($validatedRequest['products']);
+        if ($products) {
+            $punch->products()->attach($products);
+        };
 
-        $materials = Material::find($request->materials);
-        $punch->materials()->attach($materials);
+        $materials = Material::find($validatedRequest['materials']);
+        if ($materials) {
+            $punch->materials()->attach($materials);
+        };
 
-        $machines = Machine::find($request->machines);
-        $punch->machines()->attach($machines);
+        $machines = Machine::find($validatedRequest['machines']);
+        if ($machines) {
+            $punch->machines()->attach($machines);
+        };
 
         foreach($request->pics as $pic) {
             $file = $pic;
@@ -67,34 +84,36 @@ class PunchController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(PunchRequest $request)
     {
-        return Punch::with(['pics','products','materials','machines'])->where('id', $id)->get();
+        $data = $request->validated();
+        return Punch::with(['pics','products','materials','machines'])->where('id', $data['id'])->get();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Http\Requests\PunchRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(PunchRequest $request)
     {
-        //
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param App\Http\Requests\PunchRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(PunchRequest $request)
     {
-        //
+        $data = $request->validated();
+        $punch = Punch::findOrFail($data['id']);
+        return $punch->delete();
     }
 }

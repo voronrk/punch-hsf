@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MachineController;
+use App\Http\Controllers\MaterialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/', function (ProductController $products, MachineController $machines, MaterialController $materials) {
+    return view('index', [
+        'products' => $products->index(),
+        'machines' => $machines->index(),
+        'materials' => $materials->index(),
+    ]);
 });
