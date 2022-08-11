@@ -47,12 +47,3 @@ Route::any('/machine.list', [MachineController::class, 'index']);
 Route::any('/material.list', [MaterialController::class, 'index']);
 Route::any('/product.list', [ProductController::class, 'index']);
 Route::any('/punch.list', [PunchController::class, 'index']);
-
-
-// Route::apiResources([
-//     'product' => ProductController::class,
-//     'machine' => MachineController::class,
-//     'material' => MaterialController::class,
-//     'punch' => PunchController::class,
-// ]);
-
