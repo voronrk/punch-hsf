@@ -10,5 +10,6 @@ class MaterialController extends PropertyController
     public function __construct()
     {
         $this->model = new Material;
+        $this->tableName = $this->model->getTable();
     }
 }

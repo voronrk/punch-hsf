@@ -67,7 +67,6 @@ class PunchController extends Controller
                 'value' => $path
             ]);
         };
-
         return redirect('/');
     }
 
@@ -94,7 +93,8 @@ class PunchController extends Controller
         $data = $request->validated();
         $id = $data['id'];
         unset($data['id']);
-        return Punch::where('id', $id)->update($data);        
+        $result = Punch::where('id', $id)->update($data);
+        return ['result' => (bool)$result];
     }
 
     /**
@@ -106,7 +106,12 @@ class PunchController extends Controller
     public function destroy(PunchRequest $request)
     {
         $data = $request->validated();
-        $punch = Punch::findOrFail($data['id']);
-        return $punch->delete();
+        $punch = Punch::find($data['id']);
+        if ($punch) {
+            $result = $punch->delete();
+        } else {
+            return ['result' => (bool)$punch];
+        }
+        return ['result' => (bool)$result];
     }
 }

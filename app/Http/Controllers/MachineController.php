@@ -10,5 +10,6 @@ class MachineController extends PropertyController
     public function __construct()
     {
         $this->model = new Machine;
+        $this->tableName = $this->model->getTable();
     }
 }
