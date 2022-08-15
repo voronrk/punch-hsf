@@ -36,8 +36,6 @@ class FavoriteController extends Controller
     {
         session()->invalidate();
         dd(session('key'));
-        // dd($request->session()->invalidate());
-        // dd($request->session->all());
     }
 
     /**
