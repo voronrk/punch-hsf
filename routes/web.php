@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,15 @@ Route::get('/', function (ProductController $products, MachineController $machin
         'materials' => $materials->index(),
     ]);
 });
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+Route::post('/useradd', [LoginController::class, 'register'])->name('useradd');
+
+Route::post('/check', [LoginController::class, 'authenticate'])->name('check'); 
