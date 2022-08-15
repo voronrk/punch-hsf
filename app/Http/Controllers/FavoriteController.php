@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Favorite;
 
 class FavoriteController extends Controller
 {
@@ -32,10 +34,20 @@ class FavoriteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        session()->invalidate();
-        dd(session('key'));
+        // return $request->user()->token()->user_id;
+        $user_id = $request->user()->token()->user_id;
+        $punch_id = $request->punch;
+
+        // $data = $request->validated();
+        $result = Favorite::create([
+            'user_id' => $user_id,
+            'punch_id'=> $punch_id,
+        ]);
+        return ['result' => 
+            ['id' => $result->id],
+        ];
     }
 
     /**

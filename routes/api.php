@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PunchController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -20,15 +21,15 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+// Route::any('/favorites.add', [FavoriteController::class, 'store']);
 
 Route::middleware('auth:api')->group(function () {
+
     Route::any('/machine.add', [MachineController::class, 'store']);
     Route::any('/material.add', [MaterialController::class, 'store']);
     Route::any('/product.add', [ProductController::class, 'store']);
     Route::any('/punch.add', [PunchController::class, 'store']);
+    Route::any('/favorites.add', [FavoriteController::class, 'store']);
 
     Route::any('/machine.update', [MachineController::class, 'update']);
     Route::any('/material.update', [MaterialController::class, 'update']);

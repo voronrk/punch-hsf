@@ -29,9 +29,9 @@
             @csrf
             <div class="field" >
                        <label class="label">Название штампа</label>
-                       <input type="text" class="input is-small" name="title" value = "{{ old('title') }}">
+                       <input type="text" class="input is-small" name="name" value = "{{ old('name') }}">
                         @if ($errors->first('title'))
-                          <p class="help is-danger">{{ $errors->first('title') }}</p>
+                          <p class="help is-danger">{{ $errors->first('name') }}</p>
                         @endif
                    </div>
             <div class="columns">

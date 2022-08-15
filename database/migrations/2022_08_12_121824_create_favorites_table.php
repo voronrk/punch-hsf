@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
-            $table->string('session');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('punch_id');
             $table->timestamps();
 
             $table->foreign('punch_id')->references('id')->on('punches')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -32,16 +32,17 @@ class PunchController extends Controller
     public function store(PunchRequest $request)
     {
         $validatedRequest = $request->validated();
+        // dd($validatedRequest);
 
         $punch = Punch::create([
             'name' => $validatedRequest['name'],
             'ordernum' => $validatedRequest['ordernum'],
             'year' => $validatedRequest['year'],
-            'size-length' => $validatedRequest['size-length'],
-            'size-width' => $validatedRequest['size-width'],
-            'size-height' => $validatedRequest['size-height'],
-            'knife-size-length' => $validatedRequest['knife-size-length'],
-            'knife-size-width' => $validatedRequest['knife-size-width'],
+            'size_length' => $validatedRequest['size-length'],
+            'size_width' => $validatedRequest['size-width'],
+            'size_height' => $validatedRequest['size-height'],
+            'knife_size_length' => $validatedRequest['knife-size-length'],
+            'knife_size_width' => $validatedRequest['knife-size-width'],
         ]);
 
         $products = Product::find($validatedRequest['products']);
