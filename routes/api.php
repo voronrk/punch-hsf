@@ -38,6 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::any('/material.delete', [MaterialController::class, 'destroy']);
     Route::any('/product.delete', [ProductController::class, 'destroy']);
     Route::any('/punch.delete', [PunchController::class, 'destroy']);
+    Route::any('/favorites.delete', [FavoriteController::class, 'destroy']);
 
     Route::any('/machine.get', [MachineController::class, 'show']);
     Route::any('/material.get', [MaterialController::class, 'show']);
@@ -48,6 +49,7 @@ Route::middleware('auth:api')->group(function () {
     Route::any('/material.list', [MaterialController::class, 'index']);
     Route::any('/product.list', [ProductController::class, 'index']);
     Route::any('/punch.list', [PunchController::class, 'index']);
+    Route::any('/favorites.list', [FavoriteController::class, 'index']);
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

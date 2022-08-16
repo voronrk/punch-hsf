@@ -23,7 +23,18 @@ class PunchRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $isAdmin = ($this->user()->roles->value == 'admin');
+        if ($this->is('*.delete')) {
+            return $isAdmin;
+        } elseif ($this->is('*.update')) {
+            return $isAdmin;
+        } elseif ($this->is('*.add')) {
+            return $isAdmin;
+        } elseif ($this->is('*.get')) {
+            return true;
+        } elseif ($this->is('*.list')) {
+            return true;
+        } 
     }
 
     /**
