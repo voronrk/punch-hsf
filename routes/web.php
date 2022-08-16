@@ -27,12 +27,8 @@ Route::get('/', function (ProductController $products, MachineController $machin
 
 Route::get('/login', function () {
     return view('login');
-})->name('login');
+});
 
 Route::get('/register', function () {
     return view('register');
-})->name('register');
-
-Route::post('/useradd', [LoginController::class, 'register'])->name('useradd');
-
-Route::post('/check', [LoginController::class, 'authenticate'])->name('check'); 
+});

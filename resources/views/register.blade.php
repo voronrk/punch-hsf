@@ -7,10 +7,11 @@
     <title>Register</title>
 </head>
 <body>
-    <form method="POST" action="{{ route('useradd') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
-        <input type="email" name="email" placeholder="User name">
+        <input type="name" name="name" placeholder="User name">
         <input type="password" name="password" placeholder="Password">
+        <input type="number" name="role_id" placeholder="Роль">
         <button type="submit">Login</button>
     </form>
 </body>

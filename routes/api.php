@@ -21,8 +21,6 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::any('/favorites.add', [FavoriteController::class, 'store']);
-
 Route::middleware('auth:api')->group(function () {
 
     Route::any('/machine.add', [MachineController::class, 'store']);
@@ -54,5 +52,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::any('/register', [AuthController::class, 'register'])->name('register');
+Route::any('/login', [AuthController::class, 'login'])->name('login');
