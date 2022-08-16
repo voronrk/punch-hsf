@@ -39,6 +39,18 @@ class FavoriteRequest extends FormRequest
     {
         $punch_id = 'required|integer';
 
+        if ($this->is('*.delete')) {
+            return [
+                'punch_id' => $punch_id,
+            ];
+        } elseif ($this->is('*.add')) {
+            return [
+                'punch_id' => $punch_id,
+            ];
+        } else {
+            return ['Wrong method!'];
+        }
+
         return [
             'punch_id' => $punch_id,
         ];

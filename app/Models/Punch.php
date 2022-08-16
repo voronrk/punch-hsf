@@ -40,4 +40,9 @@ class Punch extends Model
     {
         return $this->belongsToMany(Machine::class);
     }
+
+    function users()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

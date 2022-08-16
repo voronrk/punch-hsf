@@ -11,8 +11,4 @@ class Favorite extends Model
 
     protected $fillable = ['punch_id', 'user_id'];
 
-    function punches()
-    {
-        return $this->hasOne(Punch::class);
-    }
 }

@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Role::class, 'id');
     }
+
+    function favorites()
+    {
+        return $this->belongsToMany(Punch::class, 'favorites');
+    }
 }
