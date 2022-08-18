@@ -10,7 +10,7 @@ use App\Models\Favorite;
 class FavoriteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all favorites for user (.list method)
      *
      * @param  \Illuminate\Http\Request  $request
      * 
@@ -22,7 +22,7 @@ class FavoriteController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add punch to favofites with check present (.add method)
      *
      * @param  App\Http\Requests\FavoriteRequest  $request
      * @return \Illuminate\Http\Response
@@ -47,13 +47,22 @@ class FavoriteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove punch from favorites (.delete method)
      *
      * @param  App\Http\Requests\FavoriteRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(FavoriteRequest $request)
     {
+        $data = $request->validated();
+        $user_id = $request->user()->token()->user_id;
 
+        $punch = Favorite::where([['user_id', $user_id], ['punch_id', $data['punch_id']]])->first();
+        if ($punch) {
+            $result = $punch->delete();
+        } else {
+            return ['result' => (bool)$punch];
+        }
+        return ['result' => (bool)$result];
     }
 }
