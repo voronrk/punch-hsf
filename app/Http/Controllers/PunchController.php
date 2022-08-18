@@ -32,7 +32,6 @@ class PunchController extends Controller
     public function store(PunchRequest $request)
     {
         $validatedRequest = $request->validated();
-        // dd($validatedRequest);
 
         $punch = Punch::create([
             'name' => $validatedRequest['name'],

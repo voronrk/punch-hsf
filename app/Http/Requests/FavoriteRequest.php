@@ -27,7 +27,7 @@ class FavoriteRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->id;
     }
 
     /**
@@ -37,7 +37,7 @@ class FavoriteRequest extends FormRequest
      */
     public function rules()
     {
-        $punch_id = 'required|integer';
+        $punch_id = 'required|integer|exists:punches,id';
 
         if ($this->is('*.delete')) {
             return [
@@ -50,10 +50,6 @@ class FavoriteRequest extends FormRequest
         } else {
             return ['Wrong method!'];
         }
-
-        return [
-            'punch_id' => $punch_id,
-        ];
     }
 
     public function messages()
@@ -61,6 +57,7 @@ class FavoriteRequest extends FormRequest
         return [
             'punch_id.required' => 'Необходимо указать id штампа',
             'punch_id.integer' => 'ID штампа должно быть целым числом',
+            'punch_id.exists' => 'Штампа нет в каталоге',
         ];
     }
 }

@@ -32,13 +32,18 @@ class FavoriteController extends Controller
         $user_id = $request->user()->token()->user_id;
         $data = $request->validated();
 
-        $result = Favorite::create([
-            'user_id' => $user_id,
-            'punch_id'=> $data['punch_id'],
-        ]);
-        return ['result' => 
-            ['id' => $result->id],
-        ];
+        $isIsset = Favorite::where([['user_id', $user_id], ['punch_id', $data['punch_id']]])->first();
+        if ($isIsset) {
+            return ['error' => 'Штамп уже в избранном!'];
+        } else {
+            $result = Favorite::create([
+                'user_id' => $user_id,
+                'punch_id'=> $data['punch_id'],
+            ]);
+            return ['result' => 
+                ['id' => $result->id],
+            ];
+        }        
     }
 
     /**
