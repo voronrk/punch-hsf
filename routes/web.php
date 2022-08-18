@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +27,10 @@ Route::get('/', function (ProductController $products, MachineController $machin
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('/register', function () {
     return view('register');
-});
+})->name('register');
+
+Route::post('/check', [AuthController::class, 'login'])->name('check');
