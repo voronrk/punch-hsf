@@ -9,6 +9,9 @@ class Favorite extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['punch_id', 'user_id'];
+    protected $fillable = [
+        'punch_id', 
+        'user_id'
+    ];
 
 }

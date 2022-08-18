@@ -17,6 +17,7 @@ class PropertyRequest extends FormRequest
     public function authorize()
     {
         $isAdmin = ($this->user()->roles->value == 'admin');
+        $isUser = ($this->user()->id);
         if ($this->is('*.delete')) {
             return $isAdmin;
         } elseif ($this->is('*.update')) {
@@ -24,9 +25,9 @@ class PropertyRequest extends FormRequest
         } elseif ($this->is('*.add')) {
             return $isAdmin;
         } elseif ($this->is('*.get')) {
-            return true;
+            return $isUser;
         } elseif ($this->is('*.list')) {
-            return true;
+            return $isUser;
         } 
     }
 

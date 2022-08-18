@@ -37,7 +37,6 @@ class FavoriteRequest extends FormRequest
      */
     public function rules()
     {
-        $user_id = 'exists:favorites,user_id';
         $deletedPunch_id = 'required|integer|exists:favorites,punch_id';
         $punch_id = 'required|integer|exists:punches,id';
 

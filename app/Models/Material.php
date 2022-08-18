@@ -9,7 +9,9 @@ class Material extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['value'];
+    protected $fillable = [
+        'value'
+    ];
 
     function punches()
     {

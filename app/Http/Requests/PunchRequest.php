@@ -38,7 +38,7 @@ class PunchRequest extends FormRequest
     }
 
     /**
-     * Undocumented function
+     * Return message then error
      *
      * @param array $errors
      * @return void
